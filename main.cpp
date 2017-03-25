@@ -4,7 +4,9 @@
 #include"minimax.h"
 #include"random.h"
 
-void display( Node* curr_node);
+using namespace std;
+
+void display(Node* curr);
 
 int main()
 {
@@ -42,11 +44,11 @@ int main()
   return 0;
 }
 
-void display( Node* curr_node)
+void display(Node* curr)
 {
   for(int i=0; i<9; ++i)
   {
-    if(i%3 == 0)
+    if(i%3 == 0 && i>2)
     {
       cout<<endl;
       cout<<"---------"<<endl;
@@ -60,4 +62,5 @@ void display( Node* curr_node)
     }
 
   }
+  cout<<endl<<endl<<endl;
 }

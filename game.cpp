@@ -63,6 +63,7 @@ int UTILITY(Node* curr, char player='X')
   //return the score for player in curr state (terminal state).
   if(player=='X')
   {
+    
 
   }
   else

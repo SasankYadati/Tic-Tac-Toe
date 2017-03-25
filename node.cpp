@@ -1,6 +1,6 @@
 #include "node.h"
 
-node::NODE()
+Node::Node()
 {
   //initialize the state of the board
   for(int i=0; i<9; ++i)
@@ -9,7 +9,7 @@ node::NODE()
   }
 }
 
-char node::PLAYER()
+char Node::PLAYER()
 {
   //count no. of X's and O's to determine the player's turn.
   int x_count=0;
@@ -41,7 +41,7 @@ char node::PLAYER()
   }
 }
 
-int* node::ACTIONS()
+int* Node::ACTIONS()
 {
   // returns an array actions[] where each index represents the corresponding cell in the board and the value is one if the cell is empty,
   // 0 otherwise.

@@ -1,6 +1,6 @@
-#ifndef "RANDOM_H"
-#define "RANDOM_H"
+#ifndef RANDOM_H
+#define RANDOM_H
 
-int RANDOM_DECISION(Node curr);
+int RANDOM_DECISION(Node *curr);
 
 #endif
