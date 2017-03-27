@@ -24,7 +24,7 @@ Hence, this game belongs to a class of adversarial search problems where our aim
 # Let's Formally Define The Game!
 We define the game to be a formal search problem with the following elements.
 <br>
-<h4> •	S<sub>O</sub> </h4>
+<h4> •	S <sub>O</sub> </h4>
 <br>
 The initial state, which specifies how the game is setup at start.In Tic-Tac-Toe, this represents a 3x3 board with all the cells empty.
 <br>
@@ -51,10 +51,11 @@ Returns true, when the game is over and false otherwise.
 
 <h4>•	UTILITY ( s , p ) </h4>
 <br>
-Returns the utility / score of player p in the terminal state s.   In Tic-Tac-Toe, the possible utility values are +1/2 (draw), +1 (win) and -1 (lose).
+Returns the utility / score of player p in the terminal state s.   In Tic-Tac-Toe, the possible utility values are 0 (draw), +1 (win) and -1 (lose).
 <br>
 # Game Tree
-The initial state, ACTIONS(s) and RESULT(s,a) together define the game tree with the initial state as the root of the tree. We use the term search tree to describe a tree that is superimposed on the game tree and examines enough nodes to determine what move to make. Following figure shows a partial game tree.
 <br>
-<img src = './game-tree.jpg'></img>
+The initial state, ACTIONS(s) and RESULT(s,a) together define the game tree with the initial state as the root of the tree. We use the term search tree to describe a tree that is superimposed on the game tree and examines enough nodes to determine what move to make. Following figure shows a partial game tree.
+<br><br>
+<img src = './game-tree.jpg'/>
 <br>
