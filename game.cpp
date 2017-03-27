@@ -47,7 +47,7 @@ bool TERMINAL_TEST(Node* curr)
 
   if( curr->state[0] != ' ' && curr->state[0] == curr->state[4] && curr->state[4] == curr->state[8] )
   {
-    return true; // the principle diagonal
+    return true; // the principal diagonal
   }
 
   if( curr->state[2] != ' ' && curr->state[2] == curr->state[4] && curr->state[4] == curr->state[6] )
@@ -60,14 +60,119 @@ bool TERMINAL_TEST(Node* curr)
 
 int UTILITY(Node* curr, char player='X')
 {
-  //return the score for player in curr state (terminal state).
-  if(player=='X')
-  {
-    
+  //return the score for player in the state curr.
+  //assumes curr is a terminal state.
 
-  }
-  else
+
+  if(player=='X')// utility for player X
   {
+    for(int i=0; i<=6; i+=3)// all the rows!
+    {
+      if(curr->state[i] != ' ' && curr->state[i]==curr->state[i+1] && curr->state[i+1]==curr->state[i+2])
+      {
+        if(curr->state[i]=='X')
+        {
+          return 1;// +1 to X because we found three X's in the row starting with index i.
+        }
+        else
+        {
+          return -1;// -1 to X because we found three O's in the row starting with index i.
+        }
+      }
+
+      for(int i=0; i<=2; i++)// all the columns!
+      {
+        if(curr->state[i] != ' ' && curr->state[i]==curr->state[i+3] && curr->state[i+3]==curr->state[i+6])
+        {
+          if(curr->state[i]=='X')
+          {
+            return 1;// +1 to X because we found three X's in the column starting with index i.
+          }
+          else
+          {
+            return -1;// -1 to X because we found three O'x in the column starting with index i.
+          }
+        }
+
+      }
+
+      // finished checking the rows and the columns
+      // now we need to check the diagonals
+
+      //diagonal one
+      if(curr->state[0]!=' ' && curr->state[0]==curr->state[4] && curr->state[4]==curr->state[8])
+      {
+        if(curr->state[0] == 'X')
+          return 1; // +1 to X because we found three X's in the principal diagonal
+        else
+          return -1; // -1 to X because we found three O's in the principal diagonal
+      }
+
+      //diagonal two
+      if(curr->state[2]!=' ' && curr->state[2]==curr->state[4] && curr->state[4]== curr->state[6])
+      {
+        if(curr->state[2] == 'X')
+          return 1; // +1 to X because we found three X's in the secondary diagonal
+        else
+          return -1;// -1 to X because we found three O's in the secondary diagonal
+      }
+    }
+  }
+
+
+  else// utility for player O
+  {
+    for(int i=0; i<=6; i+=3)// all the rows!
+    {
+      if(curr->state[i] != ' ' && curr->state[i]==curr->state[i+1] && curr->state[i+1]==curr->state[i+2])
+      {
+        if(curr->state[i]=='O')
+        {
+          return 1;// +1 to O because we found three O's in the row starting with index i.
+        }
+        else
+        {
+          return -1;// -1 to O because we found three X's in the row starting with index i.
+        }
+      }
+
+      for(int i=0; i<=2; i++)// all the columns!
+      {
+        if(curr->state[i] != ' ' && curr->state[i]==curr->state[i+3] && curr->state[i+3]==curr->state[i+6])
+        {
+          if(curr->state[i]=='O')
+          {
+            return 1;// +1 to O because we found three O's in the column starting with index i.
+          }
+          else
+          {
+            return -1;// -1 to O because we found three X's in the column starting with index i.
+          }
+        }
+
+      }
+
+      // finished checking the rows and the columns
+      // now we need to check the diagonals
+
+      //diagonal one
+      if(curr->state[0]!=' ' && curr->state[0]==curr->state[4] && curr->state[4]==curr->state[8])
+      {
+        if(curr->state[0] == 'O')
+          return 1; // +1 to X because we found three X's in the principal diagonal
+        else
+          return -1; // -1 to X because we found three O's in the principal diagonal
+      }
+
+      //diagonal two
+      if(curr->state[2]!=' ' && curr->state[2]==curr->state[4] && curr->state[4]== curr->state[6])
+      {
+        if(curr->state[2] == 'O')
+          return 1; // +1 to O because we found three O's in the secondary diagonal
+        else
+          return -1;// -1 to O because we found three X's in the secondary diagonal
+      }
+    }
 
   }
 

@@ -12,7 +12,7 @@ int main()
 {
   char user,bot; // to indicate respective player marks.
 
-  cout<<"Welcome to Tic-Tac-Toe!"<<endl;
+  cout<<endl<<"Welcome to Tic-Tac-Toe!"<<endl;
 
   // scan and validate user's input mark.
   Node* initial;
@@ -23,8 +23,8 @@ int main()
 
   do {
 
-    cout<<"X goes first!"<<endl;
-    cout<<"Choose your mark! (X or O)"<<endl;
+    cout<<"X goes first!"<<endl<<endl;
+    cout<<"Choose your mark! (X or O)"<<endl<<endl;
     cin>>user;
 
   } while(user!='X' && user!='O');
