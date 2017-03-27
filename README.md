@@ -24,32 +24,32 @@ Hence, this game belongs to a class of adversarial search problems where our aim
 # Let's Formally Define The Game!
 We define the game to be a formal search problem with the following elements.
 <br>
-<h4> •	S0 </h4>
+<h4> •	S<sub>O</sub> </h4>
 <br>
 The initial state, which specifies how the game is setup at start.In Tic-Tac-Toe, this represents a 3x3 board with all the cells empty.
 <br>
 
-<b> •	PLAYER ( s ) </b>
+<h4>•	PLAYER ( s ) </h4>
 <br>
 Defines which player has the move in the given state s.
 <br>
 
-<b> •	ACTIONS ( s ) </b>
+<h4>•	ACTIONS ( s ) </h4>
 <br>
 Returns the set of legal moves in the state s.
 <br>
 
-<b>•	RESULT ( s , a ) </b>
+<h4>•	RESULT ( s , a ) </h4>
 <br>
 Also known as the transitional model, returns the resulting state s’ on selecting move a in the state s.
 <br>
 
-<b> •	TERMINAL-TEST ( s ) </b>
+<h4>•	TERMINAL-TEST ( s ) </h4>
 <br>
 Returns true, when the game is over and false otherwise.
 <br>
 
-<b> •	UTILITY ( s , p ) </b>
+<h4>•	UTILITY ( s , p ) </h4>
 <br>
 Returns the utility / score of player p in the terminal state s.   In Tic-Tac-Toe, the possible utility values are +1/2 (draw), +1 (win) and -1 (lose).
 <br>
