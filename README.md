@@ -23,10 +23,8 @@ Hence, this game belongs to a class of adversarial search problems where our aim
 
 # Let's Formally Define The Game!
 We define the game to be a formal search problem with the following elements.
-
 <br>
-
-<b> •	S0 </b>
+<h4> •	S0 </h4>
 <br>
 The initial state, which specifies how the game is setup at start.In Tic-Tac-Toe, this represents a 3x3 board with all the cells empty.
 <br>
