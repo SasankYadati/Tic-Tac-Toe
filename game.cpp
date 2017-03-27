@@ -62,6 +62,7 @@ int UTILITY(Node* curr, char player='X')
 {
   //return the score for player in the state curr.
   //assumes curr is a terminal state.
+  //will return either +1, -1 or 0.
 
 
   if(player=='X')// utility for player X
@@ -117,6 +118,10 @@ int UTILITY(Node* curr, char player='X')
           return -1;// -1 to X because we found three O's in the secondary diagonal
       }
     }
+    // if the execution has come up to this pointer
+    // it means we found no win-lose situation
+    return 0;
+    //hence is a draw situation
   }
 
 
@@ -173,7 +178,10 @@ int UTILITY(Node* curr, char player='X')
           return -1;// -1 to O because we found three X's in the secondary diagonal
       }
     }
-
+    // if the execution has come up to this pointer
+    // it means we found no win-lose situation
+    return 0;
+    //hence is a draw situation
   }
 
 }
