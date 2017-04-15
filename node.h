@@ -7,8 +7,6 @@ public:
   char state[9]; //board's configuration
 
   Node(); //node constructor
-  char PLAYER(); //return an 'X' or an 'O'
-  int* ACTIONS(); //returns an array indication all the possible actions
 
 };
 

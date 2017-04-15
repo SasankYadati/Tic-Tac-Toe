@@ -9,62 +9,51 @@ Node* RESULT(Node* curr, int action)
 
   //copy the curr state to next state.
   for(int i=0; i<9; ++i)
-  {
     next->state[i] = curr->state[i];
-  }
 
   //update the new cell in the next state.
-  if(curr->PLAYER()=='X')
-  {
+  if(PLAYER(curr)=='X')
     next->state[action] = 'X';
-  }
   else
-  {
     next->state[action] = 'O';
-  }
 
   return next;
 }
 
 bool TERMINAL_TEST(Node* curr)
 {
-  for(int i=0; i<=6; i+=3)
+
+  if(curr->state[0]!=' ' && curr->state[0]==curr->state[1] && curr->state[1]==curr->state[2])
+    return true; //first row
+  if(curr->state[3]!=' ' && curr->state[3]==curr->state[4] && curr->state[4]==curr->state[5])
+    return true; //first row
+  if(curr->state[6]!=' ' && curr->state[6]==curr->state[7] && curr->state[7]==curr->state[8])
+    return true; //first row
+
+  if(curr->state[0]!=' ' && curr->state[0]==curr->state[3] && curr->state[3]==curr->state[6])
+    return true; //first row
+  if(curr->state[1]!=' ' && curr->state[1]==curr->state[4] && curr->state[4]==curr->state[7])
+    return true; //first row
+  if(curr->state[2]!=' ' && curr->state[2]==curr->state[5] && curr->state[5]==curr->state[8])
+    return true; //first row
+
+  if(curr->state[0]!=' ' && curr->state[0]==curr->state[4] && curr->state[4]==curr->state[8])
+    return true; //first row
+  if(curr->state[2]!=' ' && curr->state[2]==curr->state[4] && curr->state[4]==curr->state[6])
+    return true; //first row
+  for(int i=0; i<9; ++i)
   {
-    if( curr->state[i] != ' ' && curr->state[i] == curr->state[i+1] && curr->state[i+1] == curr->state[i+2] )
-    {
-      return true; //one of the rows matched
-    }
+    if(curr->state[i]==' ')
+      return false;
   }
-
-  for(int j=0; j<=2; j++)
-  {
-    if( curr->state[j] != ' ' && curr->state[j] == curr->state[j+3] && curr->state[j+3] == curr->state[j+6] )
-    {
-      return true; //one of the cols matched
-    }
-  }
-
-
-  if( curr->state[0] != ' ' && curr->state[0] == curr->state[4] && curr->state[4] == curr->state[8] )
-  {
-    return true; // the principal diagonal
-  }
-
-  if( curr->state[2] != ' ' && curr->state[2] == curr->state[4] && curr->state[4] == curr->state[6] )
-  {
-    return true; // the other diagonal
-  }
-
-  return false; // not a terminal state
+  return true; // a terminal state for draw condition
 }
 
-int UTILITY(Node* curr, char player='X')
+int UTILITY(Node* curr, char player)
 {
   //return the score for player in the state curr.
   //assumes curr is a terminal state.
   //will return either +1, -1 or 0.
-
-
   if(player=='X')// utility for player X
   {
     for(int i=0; i<=6; i+=3)// all the rows!
@@ -72,52 +61,44 @@ int UTILITY(Node* curr, char player='X')
       if(curr->state[i] != ' ' && curr->state[i]==curr->state[i+1] && curr->state[i+1]==curr->state[i+2])
       {
         if(curr->state[i]=='X')
-        {
           return 1;// +1 to X because we found three X's in the row starting with index i.
-        }
         else
-        {
           return -1;// -1 to X because we found three O's in the row starting with index i.
-        }
-      }
-
-      for(int i=0; i<=2; i++)// all the columns!
-      {
-        if(curr->state[i] != ' ' && curr->state[i]==curr->state[i+3] && curr->state[i+3]==curr->state[i+6])
-        {
-          if(curr->state[i]=='X')
-          {
-            return 1;// +1 to X because we found three X's in the column starting with index i.
-          }
-          else
-          {
-            return -1;// -1 to X because we found three O'x in the column starting with index i.
-          }
-        }
-
-      }
-
-      // finished checking the rows and the columns
-      // now we need to check the diagonals
-
-      //diagonal one
-      if(curr->state[0]!=' ' && curr->state[0]==curr->state[4] && curr->state[4]==curr->state[8])
-      {
-        if(curr->state[0] == 'X')
-          return 1; // +1 to X because we found three X's in the principal diagonal
-        else
-          return -1; // -1 to X because we found three O's in the principal diagonal
-      }
-
-      //diagonal two
-      if(curr->state[2]!=' ' && curr->state[2]==curr->state[4] && curr->state[4]== curr->state[6])
-      {
-        if(curr->state[2] == 'X')
-          return 1; // +1 to X because we found three X's in the secondary diagonal
-        else
-          return -1;// -1 to X because we found three O's in the secondary diagonal
       }
     }
+
+    for(int i=0; i<=2; i++)// all the columns!
+    {
+      if(curr->state[i] != ' ' && curr->state[i]==curr->state[i+3] && curr->state[i+3]==curr->state[i+6])
+      {
+        if(curr->state[i]=='X')
+          return 1;// +1 to X because we found three X's in the column starting with index i.
+        else
+          return -1;// -1 to X because we found three O'x in the column starting with index i.
+      }
+    }
+
+    // finished checking the rows and the columns
+    // now we need to check the diagonals
+
+    //diagonal one
+    if(curr->state[0]!=' ' && curr->state[0]==curr->state[4] && curr->state[4]==curr->state[8])
+    {
+      if(curr->state[0] == 'X')
+        return 1; // +1 to X because we found three X's in the principal diagonal
+      else
+        return -1; // -1 to X because we found three O's in the principal diagonal
+    }
+
+    //diagonal two
+    if(curr->state[2]!=' ' && curr->state[2]==curr->state[4] && curr->state[4]== curr->state[6])
+    {
+      if(curr->state[2] == 'X')
+        return 1; // +1 to X because we found three X's in the secondary diagonal
+      else
+        return -1;// -1 to X because we found three O's in the secondary diagonal
+    }
+
     // if the execution has come up to this pointer
     // it means we found no win-lose situation
     return 0;
@@ -132,56 +113,91 @@ int UTILITY(Node* curr, char player='X')
       if(curr->state[i] != ' ' && curr->state[i]==curr->state[i+1] && curr->state[i+1]==curr->state[i+2])
       {
         if(curr->state[i]=='O')
-        {
           return 1;// +1 to O because we found three O's in the row starting with index i.
-        }
         else
-        {
           return -1;// -1 to O because we found three X's in the row starting with index i.
-        }
       }
-
-      for(int i=0; i<=2; i++)// all the columns!
+    }
+    for(int i=0; i<=2; i++)// all the columns!
+    {
+      if(curr->state[i] != ' ' && curr->state[i]==curr->state[i+3] && curr->state[i+3]==curr->state[i+6])
       {
-        if(curr->state[i] != ' ' && curr->state[i]==curr->state[i+3] && curr->state[i+3]==curr->state[i+6])
-        {
-          if(curr->state[i]=='O')
-          {
-            return 1;// +1 to O because we found three O's in the column starting with index i.
-          }
-          else
-          {
-            return -1;// -1 to O because we found three X's in the column starting with index i.
-          }
-        }
-
-      }
-
-      // finished checking the rows and the columns
-      // now we need to check the diagonals
-
-      //diagonal one
-      if(curr->state[0]!=' ' && curr->state[0]==curr->state[4] && curr->state[4]==curr->state[8])
-      {
-        if(curr->state[0] == 'O')
-          return 1; // +1 to X because we found three X's in the principal diagonal
+        if(curr->state[i]=='O')
+          return 1;// +1 to O because we found three O's in the column starting with index i.
         else
-          return -1; // -1 to X because we found three O's in the principal diagonal
+          return -1;// -1 to O because we found three X's in the column starting with index i.
       }
+    }
 
-      //diagonal two
-      if(curr->state[2]!=' ' && curr->state[2]==curr->state[4] && curr->state[4]== curr->state[6])
-      {
-        if(curr->state[2] == 'O')
-          return 1; // +1 to O because we found three O's in the secondary diagonal
-        else
-          return -1;// -1 to O because we found three X's in the secondary diagonal
-      }
+    // finished checking the rows and the columns
+    // now we need to check the diagonals
+
+    //diagonal one
+    if(curr->state[0]!=' ' && curr->state[0]==curr->state[4] && curr->state[4]==curr->state[8])
+    {
+      if(curr->state[0] == 'O')
+        return 1; // +1 to X because we found three X's in the principal diagonal
+      else
+        return -1; // -1 to X because we found three O's in the principal diagonal
+    }
+
+    //diagonal two
+    if(curr->state[2]!=' ' && curr->state[2]==curr->state[4] && curr->state[4]== curr->state[6])
+    {
+      if(curr->state[2] == 'O')
+        return 1; // +1 to O because we found three O's in the secondary diagonal
+      else
+        return -1;// -1 to O because we found three X's in the secondary diagonal
     }
     // if the execution has come up to this pointer
     // it means we found no win-lose situation
     return 0;
     //hence is a draw situation
   }
+}
 
+char PLAYER(Node* curr)
+{
+  //count no. of X's and O's to determine the player's turn.
+  int x_count=0;
+  int o_count=0;
+
+  for(int i=0;i<9;++i)
+  {
+    if(curr->state[i]=='X')
+    {
+      x_count++;
+    }
+    else if(curr->state[i]=='O')
+    {
+      o_count++;
+    }
+  }
+
+  if(x_count == o_count)
+  {
+    return 'X';
+  }
+  else
+  {
+    return 'O';
+  }
+}
+
+int* ACTIONS(Node* curr)
+{
+  // returns an array actions[] where each index represents the corresponding cell in the board
+  // and the value is one if the cell is empty,
+  // 0 otherwise.
+  int * actions;
+  actions = new int[9];
+  for(int i=0; i<9; ++i)
+  {
+    actions[i] = 0;
+    if(curr->state[i] == ' ')
+    {
+      actions[i] = 1;
+    }
+  }
+  return actions;
 }
