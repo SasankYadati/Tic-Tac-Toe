@@ -9,7 +9,7 @@ using namespace std;
 void display(Node* curr);
 void choose_mark(char *user, char *bot);
 void choose_bot_type(int *bot_type);
-void play_game(Node *initial,char user,char bot,int bot_type,int *utility_user,int *utility_bot);
+void play_game(Node *initial,char user,char bot,int bot_type);
 
 
 int main()
@@ -18,8 +18,6 @@ int main()
 
   int bot_type; // 1 for random move maker and 2 for minimax strategist.
 
-  int utility_user,utility_bot; // utilities for the user and the bot respectively.
-
   // Welcome the user!
   cout<<endl<<"Welcome to Tic-Tac-Toe!"<<endl;
 
@@ -27,7 +25,6 @@ int main()
   Node* initial;
   initial = new Node;
 
-  //cout<<"SIZE OF NODE "<<sizeof(Node)<<endl;
 
   //display the board initially.
   display(initial);
@@ -65,7 +62,9 @@ int main()
 
   #endif
   // call the play_game function
-  play_game(initial,user,bot,bot_type,&utility_user,&utility_bot);
+  play_game(initial,user,bot,bot_type);
+
+
   return 0;
 }
 
@@ -124,73 +123,81 @@ void choose_bot_type(int *bot_type)
 
 }
 
-void play_game(Node *initial,char user,char bot,int bot_type,int *utility_user,int *utility_bot)
+void play_game(Node *initial,char user,char bot,int bot_type)
 {
-  // initialize the utilities of the players to zero
-  *utility_user = 0;
-  *utility_bot = 0;
 
   //declare varibales to hold actions
   int action_user,action_bot;
 
   Node * curr = initial;
-  Node next;
 
-  //check the type of the bot the user wants to play against
-  if(bot_type==1) // the random move maker
+  //check who goes first
+  if(user=='X')
   {
-    //check who goes first
-    if(user=='X')
-    {
-
+    do {
       do {
-
-        do {
-          cout<<endl<<"Choose your square to mark!"<<endl;
-          display(curr);
-          cin>>action_user;
-        } while(curr->state[action_user]!=' ');
-
-        curr = RESULT(curr,action_user);
+        cout<<endl<<"Choose your square to mark!"<<endl;
         display(curr);
-        cout<<endl;
+        cin>>action_user;
+      } while(curr->state[action_user]!=' ');
 
-        if(TERMINAL_TEST(curr))
-        {
-          cout<<"Utility for user: "<<UTILITY(curr,user)<<endl;
-          cout<<"Utility for bot: "<<UTILITY(curr,bot)<<endl;
-          return;
-        }
+      curr = RESULT(curr,action_user);
+      display(curr);
+      cout<<endl;
 
+      if(TERMINAL_TEST(curr))
+      {
+        cout<<"User Score : "<<UTILITY(curr,user)<<endl;
+        cout<<"Bot Score: "<<UTILITY(curr,bot)<<endl;
+        return;
+      }
+
+      if(bot_type==1)
+      {
         cout<<"Mr. Random Move Maker is calculating his move!"<<endl;
         action_bot = RANDOM_DECISION(curr);
-        curr = RESULT(curr,action_bot);
-        display(curr);
-        cout<<endl;
+      }
+      else if(bot_type==2)
+      {
+        cout<<"The Minimax Strategist is calculating his move!"<<endl;
+        action_bot = MINIMAX_DECISION(curr);
+      }
 
-        if(TERMINAL_TEST(curr))
+      curr = RESULT(curr,action_bot);
+      display(curr);
+      cout<<endl;
+
+      if(TERMINAL_TEST(curr))
+      {
+        cout<<"User Score : "<<UTILITY(curr,user)<<endl;
+        cout<<"Bot Score: "<<UTILITY(curr,bot)<<endl;
+        return;
+      }
+    }while(true);
+  }
+  else // user is O and the bot is X
+  {
+    do {
+        if(bot_type==1)
         {
-          cout<<"Utiliy for user : "<<UTILITY(curr,user)<<endl;
-          cout<<"Utility for bot: "<<UTILITY(curr,bot)<<endl;
-          return;
-        }
-      }while(true);
-    }
-    else // user is O and the bot is X
-    {
-      do {
           cout<<"Mr. Random Move Maker is calculating his move!"<<endl;
           action_bot = RANDOM_DECISION(curr);
+        }
+        else if(bot_type==2)
+        {
+          cout<<"The Minimax Strategist is calculating his move!"<<endl;
+          action_bot = MINIMAX_DECISION(curr);
+        }
 
-          curr = RESULT(curr,action_bot);
-          display(curr);
-          cout<<endl;
-          if(TERMINAL_TEST(curr)==true)
-          {
-            cout<<"Utility for user: "<<UTILITY(curr,user)<<endl;
-            cout<<"Utility for bot: "<<UTILITY(curr,bot)<<endl;
-            return;
-          }
+        curr = RESULT(curr,action_bot);
+        display(curr);
+        cout<<endl;
+        if(TERMINAL_TEST(curr)==true)
+        {
+          cout<<"User Score : "<<UTILITY(curr,user)<<endl;
+          cout<<"Bot Score: "<<UTILITY(curr,bot)<<endl;
+          return;
+        }
         do {
           cout<<endl<<"Choose your square to mark!"<<endl;
           display(curr);
@@ -202,81 +209,10 @@ void play_game(Node *initial,char user,char bot,int bot_type,int *utility_user,i
         cout<<endl;
         if(TERMINAL_TEST(curr)==true)
         {
-          cout<<"Utility for user: "<<UTILITY(curr,user)<<endl;
-          cout<<"Utility for bot: "<<UTILITY(curr,bot)<<endl;
+          cout<<"User Score : "<<UTILITY(curr,user)<<endl;
+          cout<<"Bot Score: "<<UTILITY(curr,bot)<<endl;
           return;
         }
-
-
       } while(true);
     }
-  }
-  else // the minimax strategist
-  {
-    //check who goes first
-    if(user=='X')
-    {
-      do {
-
-        do {
-          cout<<endl<<"Choose your square to mark!"<<endl;
-          display(curr);
-          cin>>action_user;
-        } while(curr->state[action_user]!=' ');
-
-        curr = RESULT(curr,action_user);
-
-        display(curr);
-        cout<<endl;
-
-        if(TERMINAL_TEST(curr)==true)
-          return;
-
-        cout<<"The Minimax Strategist is calculating his move!"<<endl;
-        action_bot = MINIMAX_DECISION(*curr);
-        curr = RESULT(curr,action_bot);
-
-        display(curr);
-
-        if(TERMINAL_TEST(curr)==true)
-          return;
-        cout<<endl;
-
-      } while(true);
-
-    }
-    else // user is O and the bot is X
-    {
-      do {
-          cout<<"The Minimax Strategist is calculating his move!"<<endl;
-
-          action_bot = MINIMAX_DECISION(*curr);
-          curr = RESULT(curr,action_bot);
-
-          display(curr);
-          cout<<endl;
-
-          if(TERMINAL_TEST(curr)==true)
-            return;
-
-        do {
-          cout<<endl<<"Choose your square to mark!"<<endl;
-          display(curr);
-          cin>>action_user;
-        } while(curr->state[action_user]!=' ');
-
-        curr = RESULT(curr,action_user);
-
-        display(curr);
-        cout<<endl;
-
-        if(TERMINAL_TEST(curr)==true)
-          return;
-
-
-      } while(true);
-
-    }
-
-  }
 }

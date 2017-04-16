@@ -1,20 +1,17 @@
-#include<iostream>
 #include"node.h"
 #include"game.h"
 #include"minimax.h"
 
-using namespace std;
-int count=0;
-int MINIMAX_DECISION(Node curr)
+int MINIMAX_DECISION(Node *curr)
 {
   // select the action that leads to a node with highest/lowest minimax-value.
-  int *actions = ACTIONS(&curr);
+  int *actions = curr->ACTIONS();
   int decision=0;
   int min_val, max_val, val;
 
   Node* temp;
 
-  if(PLAYER(&curr)=='X')
+  if(curr->PLAYER()=='X')
     val = -2;
   else
     val = 2;
@@ -23,10 +20,10 @@ int MINIMAX_DECISION(Node curr)
   {
     if(actions[i]==1)
     {
-      if(PLAYER(&curr)=='X')
+      if(curr->PLAYER()=='X')
       {
-        temp = RESULT(&curr,i);
-        min_val = MIN_VALUE(*temp);
+        temp = RESULT(curr,i);
+        min_val = MIN_VALUE(temp);
         if(val<min_val)
         {
           val = min_val;
@@ -35,8 +32,8 @@ int MINIMAX_DECISION(Node curr)
       }
       else
       {
-        temp = RESULT(&curr,i);
-        max_val = MAX_VALUE(*temp);
+        temp = RESULT(curr,i);
+        max_val = MAX_VALUE(temp);
         if(val>max_val)
         {
           val = max_val;
@@ -46,19 +43,19 @@ int MINIMAX_DECISION(Node curr)
     }
   }
 
-
   return decision;
 }
 
-int MAX_VALUE(Node curr)
+int MAX_VALUE(Node *curr)
 {
-  count++;
   int v;
   Node* temp;
-  int * actions = ACTIONS(&curr);
-  if(TERMINAL_TEST(&curr)==true)
+  int * actions = curr->ACTIONS();
+  if(TERMINAL_TEST(curr)==true)
   {
-    return  UTILITY(&curr,'X');
+    v = UTILITY(curr,'X');
+    delete curr;
+    return  v;
   }
   v=-2;
   int min_val;
@@ -67,24 +64,26 @@ int MAX_VALUE(Node curr)
   {
     if(actions[i]==1)
     {
-      temp = RESULT(&curr,i);
-      min_val = MIN_VALUE(*temp);
+      temp = RESULT(curr,i);
+      min_val = MIN_VALUE(temp);
       if(v < min_val)
         v = min_val;
     }
   }
+  delete curr;
   return v;
 }
 
-int MIN_VALUE(Node curr)
+int MIN_VALUE(Node *curr)
 {
-  count++;
   int v;
   Node * temp;
-  int * actions = ACTIONS(&curr);
-  if(TERMINAL_TEST(&curr)==true)
+  int * actions = curr->ACTIONS();
+  if(TERMINAL_TEST(curr)==true)
   {
-    return UTILITY(&curr,'X');
+    v = UTILITY(curr,'X');
+    delete curr;
+    return  v;
   }
 
   v =2;
@@ -93,11 +92,12 @@ int MIN_VALUE(Node curr)
   {
     if(actions[i]==1)
     {
-      temp = RESULT(&curr,i);
-      max_val = MAX_VALUE(*temp);
+      temp = RESULT(curr,i);
+      max_val = MAX_VALUE(temp);
       if(v > max_val)
         v = max_val;
     }
   }
+  delete curr;
   return v;
 }

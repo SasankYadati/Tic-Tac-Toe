@@ -8,9 +8,9 @@
 int RANDOM_DECISION(Node *curr)
 {
   // return a radomn action from a set of vaild actions in the given state curr.
-  char player = PLAYER(curr);
+  char player = curr->PLAYER();
   int * actions,num;
-  actions  = ACTIONS(curr);
+  actions  = curr->ACTIONS();
   srand(time(NULL));
   do {
     num = rand()%9;
