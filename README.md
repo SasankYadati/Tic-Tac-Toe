@@ -59,3 +59,44 @@ The initial state, ACTIONS(s) and RESULT(s,a) together define the game tree with
 <br><br>
 <img src = './game-tree.jpg'/>
 <br>
+
+# The Minimax Algorithm
+Let us call the two players MAX and MIN, for reasons that will soon become obvious. MAX moves first and then take turns moving until the game is over. At the end, points are awarded to the winner and penalties are given to the loser. Our objective is to find a sequence of actions that would lead the desired player to a terminal state of maximum utility. But, in games involving more than one player, other players have something to say about it. So, all the moves MAX can make are dependent on the moves taken by MIN. Therefore, MAX must find a strategy which specifies MAX’s move in the initial state, and then MAX’s moves in the states resulting from every possible move by MIN and so on until the game ends.
+<br>
+
+An optimal strategy maximizes the worst case outcome of the game for the computer, assuming optimal play. The definition of optimal play assumes that the opponent also plays optimally.
+<br>
+
+Given a game tree, the optimal strategy can be determined from the minimax value of each node, which we write as minimax(n).
+<br>
+
+The minimax value of a node is defined as the utility for MAX of being in the corresponding state, assuming that both players play optimally from there to the end of the game.
+<br>
+
+What if MIN does not play optimally? It is easy to show that MAX will do even better.
+<br>
+
+MAX prefers to move to a state of maximum minimax value and MIN prefers to move to a state of minimum minimax value.¬¬¬¬
+Mathematically, it is defined as follows.
+<br>
+MINIMAX(s)= 
+{
+<br>
+    UTILITY(s)                                  if TERMINAL-TEST(s)<br>
+    @max⁡(a ∈ ACTIONS(s))  MINIMAX(RESULT(s,a))  if PLAYER(S)=MAX<br> 
+    @min⁡(a ∈ ACTIONS(s))  MINIMAX(RESULT(s,a))  if PLAYER(S)=MIN<br>  
+}
+<br>
+
+The above function returns best possible move under the assumption that the opponent plays to minimize utility. The function goes through the entire game tree, all the way to the leaves to determine the minimax value of given state.
+<br>
+
+MINIMAX algorithm performs complete depth first exploration of the game tree. If the maximum depth of the tree is m (9 for Tic-Tac-Toe) and there are b (5 for Tic-Tac-Toe) legal moves at each node, then the time complexity of MINIMAX algorithm is O(bm) and the space complexity is O(m). Due to this exponential time complexity, this algorithm is impractical for games that are moderately more complex than Tic-Tac-Toe. Isn’t that off putting? Maybe it is. However, this algorithm serves as the basis for the mathematical analysis of games and for other practical algorithms.
+<br>
+
+ 
+References
+	Game in Numbers - http://www.se16.info/hgb/tictactoe.htm
+	Peter Norvig & Stuart Russell - Artificial Intelligence : A Modern Approach (3rd edition) 
+	Game Tree - http://www.devx.com/dotnet/Article/34912
+
