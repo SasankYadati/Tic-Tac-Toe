@@ -60,6 +60,10 @@ The initial state, ACTIONS(s) and RESULT(s,a) together define the game tree with
 <img src = './game-tree.jpg'/>
 <br>
 
+# The Random Decision Algorithm
+The random decision making algorithm is very straightforward and simple. At each of its turns, the bot calculates all the valid moves in the current state and chooses one of these valid actions in random. This strategy is clearly not optimal. However, we would like to use this algorithm and compare its moves with those of the minimax algorithm.
+<br>
+
 # The Minimax Algorithm
 Let us call the two players MAX and MIN, for reasons that will soon become obvious. MAX moves first and then take turns moving until the game is over. At the end, points are awarded to the winner and penalties are given to the loser. Our objective is to find a sequence of actions that would lead the desired player to a terminal state of maximum utility. But, in games involving more than one player, other players have something to say about it. So, all the moves MAX can make are dependent on the moves taken by MIN. Therefore, MAX must find a strategy which specifies MAX’s move in the initial state, and then MAX’s moves in the states resulting from every possible move by MIN and so on until the game ends.
 <br>
@@ -95,8 +99,8 @@ MINIMAX algorithm performs complete depth first exploration of the game tree. If
 <br>
 
  
-References
-	Game in Numbers - http://www.se16.info/hgb/tictactoe.htm
-	Peter Norvig & Stuart Russell - Artificial Intelligence : A Modern Approach (3rd edition) 
-	Game Tree - http://www.devx.com/dotnet/Article/34912
+# References
+Game in Numbers - <i>http://www.se16.info/hgb/tictactoe.htm</i><br>
+Peter Norvig & Stuart Russell - Artificial Intelligence : A Modern Approach (3rd edition)<br> 
+Game Tree - <i>http://www.devx.com/dotnet/Article/34912</i><br>
 
