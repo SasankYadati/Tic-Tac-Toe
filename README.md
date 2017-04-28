@@ -80,10 +80,12 @@ The minimax value of a node is defined as the utility for MAX of being in the co
 What if MIN does not play optimally? It is easy to show that MAX will do even better.
 <br>
 
-MAX prefers to move to a state of maximum minimax value and MIN prefers to move to a state of minimum minimax value.¬¬¬¬
+MAX prefers to move to a state of maximum minimax value and MIN prefers to move to a state of minimum minimax value.
+<br>
 Mathematically, it is defined as follows.
 <br>
 MINIMAX(s)= 
+<br>
 {
 <br>
     UTILITY(s)                                  if TERMINAL-TEST(s)<br>
